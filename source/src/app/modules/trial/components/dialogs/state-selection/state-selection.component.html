@@ -1,0 +1,11 @@
+<div class="flex flex-col p-xs pb-0"> 
+	
+	<mat-form-field appearance="outline" [hideRequiredMarker]="true">
+		<mat-label>State Selection</mat-label>
+		<mat-select id="state" name="state" cuiMatSelectAccessibility [(ngModel)]="model.state" required>
+			<mat-option *ngFor="let state of states" [value]="state">{{ state }}</mat-option>
+		</mat-select>
+		<mat-error>State is required</mat-error>
+	</mat-form-field>
+
+</div>

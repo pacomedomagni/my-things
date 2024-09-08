@@ -1,0 +1,88 @@
+<div class="flex flex-wrap justify-center"
+	 *ngIf="selectedParticipant"
+	 [@fadeAnim]>
+	<mat-card appearance="outlined" class="participant-card">
+		<mat-form-field appearance="outline">
+			<mat-label>Participant</mat-label>
+			<mat-select cuiMatSelectAccessibility
+						[(ngModel)]="selectedParticipant">
+				<mat-option *ngFor="let participant of participants"
+							[value]="participant">
+					{{ helper.getExtender(participant, 'DriverFirstName') }}
+					{{ helper.getExtender(participant, 'DriverLastName') }}</mat-option>
+			</mat-select>
+		</mat-form-field>
+
+		<ubi-data-list>
+			<ubi-data-list-row labelSpan="40"
+							   label="First Name">
+				{{ helper.getExtender(selectedParticipant, 'DriverFirstName') }}
+			</ubi-data-list-row>
+			<ubi-data-list-row labelSpan="40"
+							   label="Last Name">
+				{{ helper.getExtender(selectedParticipant, 'DriverLastName') }}
+			</ubi-data-list-row>
+			<ubi-data-list-row labelSpan="40"
+							   label="Mobile Phone #">
+				{{ selectedParticipant.mobileRegistrationCode | phoneNumber }}
+			</ubi-data-list-row>
+			<ubi-data-list-row labelSpan="40"
+							   label="Status">
+				{{ mobileRegistrationStatusLabel.get(selectedParticipant.status) }}
+			</ubi-data-list-row>
+			<ubi-data-list-row labelSpan="40"
+							   label="Registration Created">
+				{{ selectedParticipant.registrationDate | date: 'short' }}
+			</ubi-data-list-row>
+			<ubi-data-list-row labelSpan="40"
+							   label="Challenge Code"
+							   [rowClass]="helper.getExtender(selectedParticipant, 'ChallengeExpired') ? 'cui-color-error' : ''"
+							   [decoratorIcon]="helper.getExtender(selectedParticipant, 'ChallengeExpired') ? 'error' : ''"
+							   decoratorIconClass="mat-warn">
+				{{ selectedParticipant.challengeCode | nullCoalesce: 'No Active Challenge Codes' }}
+			</ubi-data-list-row>
+			<ubi-data-list-row labelSpan="40"
+							   label="Challenge Code Expiration Date"
+							   [rowClass]="helper.getExtender(selectedParticipant, 'ChallengeExpired') ? 'cui-color-error' : ''"
+							   [decoratorIcon]="helper.getExtender(selectedParticipant, 'ChallengeExpired') ? 'error' : ''"
+							   decoratorIconClass="mat-warn">
+				{{ selectedParticipant.challengeCodeExpirationDate | date: 'short' }}
+			</ubi-data-list-row>
+		</ubi-data-list>
+	</mat-card>
+
+	<mat-card appearance="outlined">
+		<button *ngIf="!disallowedRegistrationStatuses.includes(selectedParticipant.status)"
+				mat-flat-button
+				color="primary"
+				class="mb-xs"
+				(click)="registerDevice(selectedParticipant);"
+				aria-label="Register device">
+			Register Device
+		</button>
+		<button mat-flat-button
+				color="primary"
+				class="mb-xs"
+				(click)="openChangePhoneNumberDialog();"
+				aria-label="Update mobile number">
+			Update Mobile Number
+		</button>
+		<button *ngIf="selectedParticipant.status === MobileRegistrationStatus.Locked"
+				mat-flat-button
+				color="primary"
+				class="mb-xs"
+				(click)="unlockRegistration(selectedParticipant);"
+				aria-label="Unlock registration">
+			Unlock
+		</button>
+		<button *ngIf="shouldDisplayMobilePause(selectedParticipant)"
+				mat-flat-button
+				color="primary"
+				class="mb-xs"
+				(click)="updatePause(selectedParticipant);"
+				aria-label="Update mobile pause">
+			{{ getMobilePauseDisplay() }}
+		</button>
+	</mat-card>
+
+</div>

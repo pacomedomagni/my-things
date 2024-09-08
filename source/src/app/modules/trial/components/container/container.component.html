@@ -1,0 +1,17 @@
+<div class="flex justify-center">
+	<mat-card appearance="outlined" class="flex flex-col">
+
+		<div *ngFor="let item of vendorList">
+			<button class="mb-xs full-width" mat-flat-button color="primary"
+				(click)="openTrialSetupDialog(item)">
+				Create {{ExpressTrialVendorLabel.get(item)}} Participant
+			</button>
+		</div>
+		<div *ngFor="let item of vendorEDAQList">
+			<button class="mb-xs full-width" mat-flat-button color="primary"
+				(click)="openEDAQTrialSetupDialog(item)">
+				Create {{EDAQTrialVendorLabel.get(item)}} Participant
+			</button>
+		</div>
+	</mat-card>
+</div>

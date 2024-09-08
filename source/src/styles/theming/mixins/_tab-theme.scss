@@ -1,0 +1,30 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@mixin tab-theme($theme) {
+	$color-config: mat.get-color-config($theme);
+	$accent: map.get($color-config, 'accent');
+	$primary: map.get($color-config, 'primary');
+	$is-dark: map.get($color-config, 'is-dark');
+	$is-high-contrast: map.get($color-config, 'is-high-contrast');
+	/* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+	.mat-tab-label-active {
+		color: inherit;
+		border-radius: $border-radius;
+
+		@if $is-high-contrast {
+			transition: none !important;
+			background-color: mat.get-color-from-palette($accent) !important;
+			color: $black;
+		}
+
+		@else {
+			color: mat.get-color-from-palette($primary, if($is-dark, 200, darker));
+			background-color: mat.get-color-from-palette($primary, 0.12) !important;
+
+			&:hover {
+				background-color: mat.get-color-from-palette($primary, .04) !important;
+			}
+		}
+	}
+}

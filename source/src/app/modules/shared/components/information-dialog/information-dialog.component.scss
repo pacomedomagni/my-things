@@ -1,0 +1,7 @@
+:host {
+	::ng-deep {
+		.dialog-footer {
+			justify-content: flex-end !important;
+		}
+	}
+}

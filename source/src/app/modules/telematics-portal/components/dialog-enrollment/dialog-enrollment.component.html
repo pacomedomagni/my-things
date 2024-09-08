@@ -1,0 +1,13 @@
+<div class="flex flex-col justify-center p-xs pb-0">
+	<mat-form-field appearance="outline">
+		<mat-label>Phone Number</mat-label>
+		<input [(ngModel)]="model.phoneNumber" required name="phoneNumber" id="ubi-ps-phn-nbr-enrollment" type="text" matInput mask="(000) 000-0000" minlength="10">
+		<mat-error>Minimum length is 10</mat-error>
+		<mat-error *ngIf="phoneNumberFormControl.hasError('required')">
+			Please enter a phone number.
+		</mat-error>
+		<mat-error *ngIf="phoneNumberFormControl.hasError('minlength') || phoneNumberFormControl.hasError('maxlength')">
+			Please enter a valid phone number.
+		</mat-error>
+	</mat-form-field>
+</div>

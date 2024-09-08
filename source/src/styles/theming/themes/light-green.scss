@@ -1,0 +1,32 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+@import "theming/themes/light-green";
+@import "../mixins/app-theme";
+
+$color-config: mat.get-color-config($theme);
+$primary: map.get($color-config, 'primary');
+$background: map.get($color-config, 'background');
+$background: map.merge($background, (background: $white));
+$theme: map.merge($theme, (background: $background));
+
+$theme-extensions: (
+	is-green: true,
+	is-light: false
+);
+$modified-theme: map.merge($theme, $theme-extensions);
+
+@include smarthub-theme($modified-theme);
+
+.cui-tmx-content,
+.mat-drawer,
+.mat-drawer.mat-drawer-push {
+	background-color: mat.get-color-from-palette($cui-grey, 100);
+}
+
+.mat-drawer-container {
+	background-color: $white;
+}
+
+.app-logo {
+	content: url("../../../assets/logo-green.png");
+}

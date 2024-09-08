@@ -1,0 +1,46 @@
+<mat-card appearance="outlined">
+	<div class="flex flex-wrap justify-center">
+
+		<div class="ml-xxs mr-l flex">
+			<mat-form-field appearance="outline">
+				<mat-label>Slot Name</mat-label>
+				<mat-select [(ngModel)]="selectedSlot" (selectionChange)="onSlotValueChanged($event)">
+					<mat-option></mat-option>
+					<mat-option *ngFor="let slot of slots" [value]="slot">
+						{{slot}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+		</div>
+
+		<div class="flex">
+			<mat-form-field appearance="outline">
+				<mat-label>Policy Number</mat-label>
+				<input #policyNumber id="ubi-ps-pol-nbr" (keyup.enter)="searchByPolicyNumber(policyNumber.value)" type="text"
+					matInput maxlength="9" (change)="phoneNumber=''">
+				<mat-error>Maximum length is 9</mat-error>
+			</mat-form-field>
+			<span>
+				<button mat-flat-button color="primary" class="ml-xxs mr-l search-button"
+					(click)="searchByPolicyNumber(policyNumber.value)">Search
+					<ng-content select="mat-icon"></ng-content>
+				</button>
+			</span>
+		</div>
+
+		<div class="flex">
+			<mat-form-field appearance="outline">
+				<mat-label>Phone Number</mat-label>
+				<input [(ngModel)]="phoneNumber" id="ubi-ps-phn-nbr" type="text" matInput mask="(000) 000-0000" minlength="10"
+					(keyup.enter)="searchByPhoneNumber(phoneNumber)" (change)="policyNumber.value=''">
+				<mat-error>Minimum length is 10</mat-error>
+			</mat-form-field>
+			<span>
+				<button mat-flat-button color="primary" class="ml-xxs mr-l search-button"
+					(click)="searchByPhoneNumber(phoneNumber)">Search
+					<ng-content select="mat-icon"></ng-content>
+				</button>
+			</span>
+		</div>
+	</div>
+</mat-card>

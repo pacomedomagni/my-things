@@ -1,0 +1,184 @@
+	<mat-card appearance="outlined">
+		<div class="flex flex-wrap justify-center">
+			<div class="flex">
+				<mat-form-field appearance="outline">
+					<mat-label>Policy Number</mat-label>
+					<input #policyNumber id="ubi-ps-pol-nbr" type="text" matInput maxlength="9" (change)="phoneNumber=''">
+					<mat-error>Maximum length is 9</mat-error>
+				</mat-form-field>
+				<span>
+					<button mat-flat-button color="primary" class="ml-xxs mr-l search-button"
+						(click)="getAREParticipantSummary(policyNumber.value)">Search
+						<ng-content select="mat-icon"></ng-content>
+					</button>
+				</span>
+			</div>
+			<div class="flex">
+				<mat-form-field appearance="outline">
+					<mat-label>Phone Number</mat-label>
+					<input [(ngModel)]="phoneNumber" id="ubi-ps-phn-nbr" type="text" matInput mask="(000) 000-0000" minlength="10"
+						(change)="policyNumber.value=''">
+					<mat-error>Minimum length is 10</mat-error>
+				</mat-form-field>
+				<span>
+					<button mat-flat-button color="primary" class="ml-xxs mr-l search-button"
+						(click)="searchByPhoneNumber(phoneNumber)">Search
+						<ng-content select="mat-icon"></ng-content>
+					</button>
+				</span>
+			</div>				
+		</div>
+	</mat-card>		
+<div class="flex flex-wrap justify-center"
+	 [@fadeAnim]>
+	<mat-card appearance="outlined" *ngIf="policyListHasErrors()" [@fadeAnim]>
+		<ubi-empty-state svgIcon="ubi_sadcone" primaryText="Uh oh..." secondaryText="{{getPrimaryError()}}">
+		</ubi-empty-state>
+	</mat-card>
+	<mat-card appearance="outlined" *ngIf="policies && !policyListHasErrors()">
+		<ubi-are-multi-policy-details [policies]="policies" (policySelection)="setPolicy($event)"></ubi-are-multi-policy-details>
+	</mat-card>
+	<mat-card appearance="outlined" *ngIf="selectedDriver">
+		<mat-card appearance="outlined" class="participant-card">
+			<mat-form-field appearance="outline">
+				<mat-label>Driver Ref ID</mat-label>
+				<mat-select cuiMatSelectAccessibility
+							[(ngModel)]="selectedDriver">
+					<mat-option *ngFor="let driver of drivers"
+								[value]="driver">
+						{{ driver.driverReferenceId }}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+	
+			<ubi-data-list>
+				<ubi-data-list-row labelSpan="40"
+								   label="Eligible for Accident Detection">
+					{{ selectedDriver.adEnrollmentEligible? 'Yes':'No' }}
+					{{ isMobileRegistrationStatusPendingResolution(selectedDriver.mobileRegistrationData?.mobileRegistrationStatusCode)? '(Mobile registration status is pending resolution so enrollment button is disabled)':''}}
+				</ubi-data-list-row>
+				<ubi-data-list-row labelSpan="40"
+								label="ARE Summary - Activated">
+					{{ getARESummaryActivatedValue() }}
+				</ubi-data-list-row>
+				<ubi-data-list-row labelSpan="40"
+				label="UBI Enrolled">
+					{{ getUBIEnrolledValue() }}
+				</ubi-data-list-row>
+				<ubi-data-list-row labelSpan="40"
+				label="UBI Activated">
+					{{ getUBIActivatedValue() }}
+				</ubi-data-list-row>
+				<ubi-data-list-row labelSpan="40"
+								label="ARE Summary - Enrolled">
+					{{ getARESummaryEnrolledValue() }}
+				</ubi-data-list-row>				
+				<ubi-data-list-row labelSpan="40"
+								label="ARE Summary - Enrollment Date">
+					{{ getARESummaryEnrollmentDate() | date: 'short'}}
+				</ubi-data-list-row>				
+				<ubi-data-list-row labelSpan="40"
+								label="ARE Summary - UnEnrolled Reason" *ngIf="shouldUnenrollReasonBeDisplayed()">
+					{{ getARESummaryUnenrollReason() }}
+				</ubi-data-list-row>				
+				<ubi-data-list-row labelSpan="40"
+								label="ARE Summary - UnEnrollment Date" *ngIf="shouldUnenrollmentDateBeDisplayed()">
+					{{ getARESummaryUnenrollmentDate() | date: 'short'}}
+				</ubi-data-list-row>		
+				<ubi-data-list-row labelSpan="40"
+				label="Phone number">
+					{{ getPhoneNumberValue() }}
+				</ubi-data-list-row>		
+				<ubi-data-list-row labelSpan="40" 
+								label="Challenge Code"
+								[rowClass]="isChallengeCodeExpired() ? 'cui-color-error' : ''"
+								[decoratorIcon]="isChallengeCodeExpired() ? 'error' : ''"
+								decoratorIconClass="mat-warn">
+					{{ selectedDriver.mobileRegistrationData?.mobileChallengeCode | nullCoalesce: 'No Active Challenge Codes' }}
+				</ubi-data-list-row>
+				<ubi-data-list-row labelSpan="40" 
+								label="Challenge Code Expiration Date"
+								[rowClass]="isChallengeCodeExpired() ? 'cui-color-error' : ''"
+								[decoratorIcon]="isChallengeCodeExpired() ? 'error' : ''"
+								decoratorIconClass="mat-warn">
+					{{ selectedDriver.mobileRegistrationData?.challengeExpirationDateTime | date: 'short' }}
+				</ubi-data-list-row>											
+			</ubi-data-list>
+		</mat-card>
+	</mat-card>
+	<div>
+		<mat-card appearance="outlined" *ngIf="selectedDriver">
+			<button #enrollButton [disabled]="shouldEnrollButtonBeDisabled()"
+					mat-flat-button
+					color="primary"
+					class="mb-xs"
+					(click)="enrollParticipant(selectedDriver.driverReferenceId);"
+					aria-label="Enroll in Accident Detection">
+				Enroll in Accident Detection
+			</button>
+			<button #registerButton [disabled]="shouldRegisterButtonBeDisabled()"
+			mat-flat-button
+			color="primary"
+			class="mb-xs"
+			(click)="registerParticipant();"
+			aria-label="Register">
+				Register
+
+			</button>
+
+			<button #updateMobileNumberButton [disabled]="shouldUpdatePhoneNumberButtonBeDisabled()"
+			mat-flat-button
+			color="primary"
+			class="mb-xs"
+			(click)="openChangePhoneNumberDialog();"
+			aria-label="Update Mobile Number">
+				Update Mobile Number
+			</button>
+
+			<button [disabled]="shouldActivateADFeatureButtonBeDisabled() "
+			mat-flat-button
+			color="primary"
+			class="mb-xs"
+			(click)="activateAccidentDetectionFeature();"
+			aria-label="Activate Accident Detection Feature">
+				Activate Accident Detection Feature
+			</button>
+
+			<button [disabled]="shouldUBIFeatureButtonBeDisabled() "
+			mat-flat-button
+			color="primary"
+			class="mb-xs"
+			(click)="activateUBIFeature();"
+			aria-label="Activate UBI Feature">
+				Activate UBI Feature
+			</button>
+
+			<button #unenrollUserInitiatedButton [disabled]="shouldUnenrollUserInitiatedButtonBeDisabled()"
+			mat-flat-button
+			color="primary"
+			class="mb-xs"
+			(click)="unenrollParticipantUserInitiated()"
+			aria-label="User Initiated Stage Opt-Out">
+				User Initiated Stage Opt-Out
+			</button>
+
+			<button #unenrollNonInstallerButton [disabled]="shouldUnenrollNonInstallerButtonBeDisabled()"
+			mat-flat-button
+			color="primary"
+			class="mb-xs"
+			(click)="unenrollParticipantNonInstaller()"
+			aria-label="Non Installer Stage Opt-Out">
+				Non Installer Stage Opt-Out
+			</button>
+
+			<button #unenrollNonCommunicatorButton [disabled]="shouldUnenrollNonCommunicatorButtonBeDisabled()"
+			mat-flat-button
+			color="primary"
+			class="mb-xs"
+			(click)="unenrollParticipantNonCommunicator()"
+			aria-label="Non Communicator Stage Opt-Out">
+				Non Communicator Stage Opt-Out
+			</button>
+		</mat-card>
+	</div>
+</div>

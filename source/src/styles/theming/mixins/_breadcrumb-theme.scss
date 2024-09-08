@@ -1,0 +1,28 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@mixin breadcrumb-theme($theme) {
+	$color-config: mat.get-color-config($theme);
+	$is-dark: map.get($color-config, 'is-dark');
+	$is-high-contrast: map.get($color-config, 'is-high-contrast');
+
+	@if $is-dark {
+		.xng-breadcrumb-root {
+			color: rgba(255, 255, 255, .6) !important;
+		}
+
+		.xng-breadcrumb-trail {
+			color: rgba(255, 255, 255, .9) !important;
+		}
+	}
+
+	@if $is-high-contrast {
+		.xng-breadcrumb-root {
+			color: rgba(255, 255, 255, .6) !important;
+		}
+
+		.xng-breadcrumb-trail {
+			color: rgba(255, 255, 255, .9) !important;
+		}
+	}
+}

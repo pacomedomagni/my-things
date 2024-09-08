@@ -1,0 +1,9 @@
+<div class="flex flex-col justify-center p-xs pb-0">
+
+	<mat-radio-group aria-label="Select a vehicle" [(ngModel)]="model" layout="row" required>
+		<mat-radio-button class="pb-xs" *ngFor="let vehicle of vehicles" [value]="vehicle">
+			{{ vehicle.year }} {{ vehicle.make }} {{ vehicle.model }}
+		</mat-radio-button>
+	</mat-radio-group>
+
+</div>

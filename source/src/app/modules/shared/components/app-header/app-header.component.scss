@@ -1,0 +1,19 @@
+@import 'base/variables';
+
+:host{
+	img {
+		max-height: 75px;
+		z-index: 1000;
+	}
+
+	.info-container {
+		position: absolute;
+    right: 25px;
+    top: 5px;
+
+		a {
+			display: block;
+		}
+	}
+
+}

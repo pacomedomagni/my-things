@@ -1,0 +1,19 @@
+::ng-deep {
+	.dialog-footer {
+		justify-content: flex-end !important;
+	}
+    .mat-mdc-dialog-content {
+		margin: 0px 10px;
+		display: flex;
+		flex-direction: column;
+	}
+	.mat-mdc-radio-group{
+		display: flex;
+		flex-direction: column;
+		margin: 15px 0;
+	  }
+
+	  .mat-mdc-radio-button {
+		margin: 15px;
+	  }
+}

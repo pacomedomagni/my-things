@@ -1,0 +1,32 @@
+<mat-sidenav-container class="tmx-sidenav-container">
+
+	<mat-sidenav #sidenav class="ubi-sidenav" opened [fixedInViewport]
+		[autoFocus]="false">
+		<ubi-side-nav-bar
+			*ngIf="(appDataService.currentAppGroup$ | async)?.applications.length > 1"></ubi-side-nav-bar>
+	</mat-sidenav>
+
+	<mat-sidenav #sidesheet class="cui-side-sheet" position="end"
+		[autoFocus]="true" [fixedInViewport]="true" role="region">
+		<ng-container *ngIf="selectedSideSheet$ | async as selectedSideSheet">
+			<ng-container *ngComponentOutlet="selectedSideSheet"></ng-container>
+		</ng-container>
+	</mat-sidenav>
+
+	<mat-sidenav-content #content>
+		<ubi-app-header title="TMX {{appQuery.appName}} APP"></ubi-app-header>
+		<div class="tmx-sidenav-content px-xxl">
+			<div class="cui-ubi-container">
+				<ubi-page-header
+					[headerText]="(appDataService.currentAppGroup$ | async)?.applications[0]?.name">
+					<span>{{ (appDataService.currentAppGroup$ | async)?.applications[0]?.description }}</span>
+					<ng-content header-addon></ng-content>
+				</ubi-page-header>
+				<div class="cui-tmx-content p-xs">
+					<router-outlet></router-outlet>
+				</div>
+			</div>
+		</div>
+	</mat-sidenav-content>
+
+</mat-sidenav-container>

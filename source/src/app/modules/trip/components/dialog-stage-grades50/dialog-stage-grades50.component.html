@@ -1,0 +1,27 @@
+<div class="flex flex-col justify-center p-xs pb-0">
+	<p class="mb-s">*NOTE: When staging grades, all connectivity and trip data will be deleted within the current policy term and new data will be staged according to your selections. 
+		Connectivity days must be between your policy inception/enrollment date (whichever is later) and the policy expiration date.</p>
+	<mat-form-field appearance="outline" [hideRequiredMarker]="true">
+		<mat-label>Enter a connectivity date range</mat-label>
+		<mat-date-range-input [rangePicker]="picker" [min]="enrollmentDate" [max]="expirationDate" >
+			<input name="ubi-sg-start" id="ubi-sg-start" matStartDate placeholder="Start Date" [(ngModel)]="model.startDate" required>
+			<input name="ubi-sg-end" id="ubi-sg-end" matEndDate placeholder="End Date" [(ngModel)]="model.endDate" required>
+		</mat-date-range-input>
+		<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+		<mat-date-range-picker #picker></mat-date-range-picker>
+		<!--BUG for immediate validation error: https://github.com/angular/components/issues/20213-->
+		<mat-error>
+			Please enter a date range between the term inception and expiration dates.
+		</mat-error>
+	</mat-form-field>
+
+	<mat-form-field appearance="outline" [hideRequiredMarker]="true">
+		<mat-label>UBI Value ({{minimum | number:'1.3-3'}} - {{maximum | number:'1.3-3'}})</mat-label>
+		<input [(ngModel)]="ubiValue" name="ubi-sg-ubi-val" id="ubi-sg-ubi-val" type="text" matInput mask="separator.3"
+			thousandSeparator="," required [min]="minimum" [max]="maximum" (focusout)="model.ubiValue = +ubiValue">
+		<mat-error>
+			Please enter a valid number between {{minimum | number:'1.3-3'}} and {{maximum | number:'1.3-3'}}.
+		</mat-error>
+	</mat-form-field>
+
+</div>

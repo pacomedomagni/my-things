@@ -1,0 +1,137 @@
+<div class="flex flex-wrap justify-center" *ngIf="selectedParticipant" [@fadeAnim]>
+	<mat-card appearance="outlined" class="participant-card">
+			<mat-form-field appearance="outline">
+					<mat-label>Participant</mat-label>
+					<mat-select cuiMatSelectAccessibility [(ngModel)]="selectedParticipant">
+							<mat-option *ngFor="let participant of participants" [value]="participant">
+									{{ this.policyQuery.getParticipantName(participant) }}
+							</mat-option>
+					</mat-select>
+			</mat-form-field>
+
+			<ubi-data-list>
+					<ubi-data-list-row labelSpan="40" label="First Name" *ngIf="selectedParticipant.enrollmentExperience === deviceExperience.Mobile">
+							{{ selectedParticipant.driver.firstName }}
+					</ubi-data-list-row>
+					<ubi-data-list-row labelSpan="40" label="Last Name" *ngIf="selectedParticipant.enrollmentExperience === deviceExperience.Mobile">
+							{{ selectedParticipant.driver.lastName }}
+					</ubi-data-list-row>
+					<ubi-data-list-row labelSpan="40" label="Mobile Phone #" *ngIf="selectedParticipant.enrollmentExperience === deviceExperience.Mobile">
+							{{ selectedParticipant.mobileDetails?.phoneNumber | phoneNumber }}
+					</ubi-data-list-row>
+					<ubi-data-list-row labelSpan="40" label="Status">
+							{{ participantStatusLabel.get(selectedParticipant.status) }}
+					</ubi-data-list-row>
+					<ubi-data-list-row labelSpan="40" label="Enrollment Date">
+							{{ selectedParticipant.enrollmentDate | date: 'short' }}
+					</ubi-data-list-row>
+					<ubi-data-list-row labelSpan="40" label="Wireless Status" *ngIf="selectedParticipant.enrollmentExperience !== deviceExperience.Mobile">
+							{{ selectedParticipant.deviceDetails?.wirelessStatus }}
+					</ubi-data-list-row>
+					<ubi-data-list-row labelSpan="40" label="Serial Number" *ngIf="selectedParticipant.enrollmentExperience !== deviceExperience.Mobile">
+							{{ selectedParticipant.deviceDetails?.serialNumber }}
+					</ubi-data-list-row>
+					<ubi-data-list-row labelSpan="40" label="Last Contact Date" *ngIf="isNonCommunicator(selectedParticipant) && selectedParticipant.enrollmentExperience !== deviceExperience.Mobile">
+							{{ selectedParticipant.lastContactDate | date: 'short' }}
+					</ubi-data-list-row>
+					<ubi-data-list-row labelSpan="40" label="Last Upload Date" *ngIf="isNonCommunicator(selectedParticipant) && selectedParticipant.enrollmentExperience !== deviceExperience.Mobile">
+							{{ selectedParticipant.lastUploadDate | date: 'short' }}
+					</ubi-data-list-row>
+					<ubi-data-list-row labelSpan="40" label="Ship Date" *ngIf="isNonInstaller(selectedParticipant) && selectedParticipant.enrollmentExperience !== deviceExperience.Mobile">
+							{{ selectedParticipant.deviceDetails?.shipDate | date: 'short' }}
+					</ubi-data-list-row>
+			</ubi-data-list>
+	</mat-card>
+
+	<mat-card appearance="outlined">
+			<button
+					class="mb-xs"
+					mat-flat-button color="primary"
+					(click)="openNonInstallerSetupDialog()"
+					[disabled]="!isNonInstaller(selectedParticipant)">
+					Non-Installer Status Setup
+			</button>
+
+			<button
+					class="mb-xs"
+					mat-flat-button
+					color="primary"
+					(click)="nonInstallerOptOut()"
+					[disabled]="!isNonInstaller(selectedParticipant) || 
+								!canNonInstallerOptOut(selectedParticipant)">
+					Non-Installer Stage Opt-out
+			</button>
+
+			<button
+					class="mb-xs"
+					mat-flat-button
+					color="primary"
+					(click)="openNonCommunicatorSetupDialog()"
+					[disabled]="!isNonCommunicator(selectedParticipant)">
+					Non-Communicator Status Setup
+			</button>
+
+			<button
+					class="mb-xs"
+					mat-flat-button
+					color="primary"
+					(click)="nonCommunicatorOptOut()"
+					[disabled]="!isNonCommunicator(selectedParticipant)">
+					Non-Communicator Stage Opt-out
+			</button>
+
+			<button
+					class="mb-xs"
+					mat-flat-button
+					color="primary"
+					(click)="openChangeEnrollmentDialog()">
+					Change Enrollment Date
+			</button>
+			
+			<button
+					class="mb-xs"
+					mat-flat-button
+					color="primary"
+					(click)="openMobileSwitchDialog()"
+					[ngClass]="{'hidden': !shouldDisplayMobileSwitch()}">
+					Switch Mobile to Plug-in
+			</button>
+
+			<button
+					class="mb-xs"
+					mat-flat-button
+					color="primary"
+					(click)="openOptInPluginDialog()"
+					[ngClass]="{'hidden': !shouldDisplayOptInPlugin()}">
+					Automated Opt-in
+			</button>
+
+			<button
+					class="mb-xs"
+					mat-flat-button
+					color="primary"
+					(click)="openOptInMobileDialog()"
+					[ngClass]="{'hidden': !shouldDisplayOptInMobile()}">
+					Automated Opt-in
+			</button>
+
+			<button
+					class="mb-xs"
+					mat-flat-button
+					color="primary"
+					(click)="openMobileNotFitDialog()"
+					*ngIf="isMobileParticipant"
+					[disabled]="!shouldDisplayMobileNotFit()">
+					Mobile Not Fit Opt-out
+			</button>
+
+			<button
+				class="mb-xs"
+				mat-flat-button
+				color="primary"
+				*ngIf="shouldDisplayDateUpdate()"
+				(click)="openDeviceDateUpdateDialog()">
+				Manual Device Date Update
+		</button>
+	</mat-card>
+</div>

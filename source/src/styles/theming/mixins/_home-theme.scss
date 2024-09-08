@@ -1,0 +1,20 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+@import '../../variables';
+
+@mixin home-theme($theme) {
+	$color-config: mat.get-color-config($theme);
+	$is-dark: map.get($color-config, 'is-dark');
+	$is-high-contrast: map.get($color-config, 'is-high-contrast');
+	$gray: mat.define-palette($cui-gray);
+
+	.card-container {
+		background-color: $white;
+	}
+
+	@if ($is-dark or $is-high-contrast) {
+		.card-container {
+			background-color: mat.get-color-from-palette($gray, 800);
+		}
+	}
+}

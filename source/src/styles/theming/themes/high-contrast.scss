@@ -1,0 +1,18 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+@import "theming/themes/high-contrast";
+@import "../mixins/app-theme";
+@include smarthub-theme($theme);
+
+.app-logo {
+	content: url("../../../assets/logo-hc.png");
+}
+
+a {
+	color: mat.get-color-from-palette($cui-hc-yellow, 500);
+}
+
+.cui-link,
+.cui-icon-link {
+	color: mat.get-color-from-palette($cui-hc-yellow, 500);
+}

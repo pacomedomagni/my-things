@@ -1,0 +1,52 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@mixin mat-dialog-theme($theme) {
+	$color-config: mat.get-color-config($theme);
+	$primary: map.get($color-config, 'primary');
+	$is-dark: map.get($color-config, 'is-dark');
+	$is-high-contrast: map.get($color-config, 'is-high-contrast');
+	$is-light: map.get($color-config, 'is-light');
+	$is-green: map.get($color-config, 'is-green');
+	$green: mat.define-palette($cui-green);
+	$blue: mat.define-palette($cui-blue);
+	$orange: mat.define-palette($cui-orange);
+
+	.mat-toolbar.dialog-header {
+		
+		@if $is-dark {
+			background-color: mat.get-color-from-palette($blue, 900);
+		}
+
+		@if $is-high-contrast {
+			background-color: mat.get-color-from-palette($cui-hc-yellow, 500);
+		}
+
+		@if $is-green {
+			background-color: mat.get-color-from-palette($green, 900);
+		}
+
+		.mat-icon {
+			color: mat.get-color-from-palette($primary, darker-contrast);
+		}
+	}
+
+	.dialog-sub-header .notification-banner {
+		&--info {
+
+			@if $is-dark {
+				background-color: mat.get-color-from-palette($blue, 800);
+			}
+
+			@if $is-green {
+				background-color: mat.get-color-from-palette($green, 50);
+				color: mat.get-color-from-palette($green, 900);
+			}
+
+			@if $is-high-contrast {
+				background-color: $black;
+				border-bottom: 1px dashed mat.get-color-from-palette($cui-hc-yellow, 500);
+			}
+		}
+	}
+}

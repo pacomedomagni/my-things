@@ -1,0 +1,32 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+@import "mixins/theming/cui-theme";
+
+@import "./body-theme";
+@import "./breadcrumb-theme";
+@import "./data-list-row-theme";
+@import "./home-theme";
+@import "./mat-dialog-theme";
+@import "./nav-rail-theme";
+@import "./page-header-theme";
+@import "./preloader-theme";
+@import "./sidenav-theme";
+@import "./snackbar-theme";
+@import "./tab-theme";
+@import "./table-theme";
+
+@mixin smarthub-theme($theme) {
+	@include cui-theme($theme);
+	@include body-theme($theme);
+	@include breadcrumb-theme($theme);
+	@include data-list-row-theme($theme);
+	@include home-theme($theme);
+	@include mat-dialog-theme($theme);
+	@include nav-rail-theme($theme);
+	@include page-header-theme($theme);
+	@include pre-loader-theme($theme);
+	@include sidenav-theme($theme);
+	@include snackbar-theme($theme);
+	@include tab-theme($theme);
+	@include table-theme($theme);
+}

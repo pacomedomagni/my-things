@@ -1,0 +1,26 @@
+{
+	"environment": {
+		"name": "gold",
+		"isProduction": true,
+		"prefix": "t"
+	},
+	"build": {
+		"version": "${BUILD_DEFINITIONVERSION}",
+		"buildId": "${BUILD_BUILDID}",
+		"buildNumber": "${BUILD_BUILDNUMBER}",
+		"branch": "${BUILD_SOURCEBRANCHNAME}"
+	},
+	"auth": {
+		"issuer": "qa-tokenservice.proghszq.com",
+		"discoveryDoc": "/assets/oidc.discovery.json",
+		"redirectUri": "/oauth_sso",
+		"clientId": "ubi-ui-smarthub",
+		"responseType": "code",
+		"scope": "openid",
+		"skipIssuerCheck": true,
+		"strictDiscoveryDocumentValidation": false
+	},
+	"connections": {
+		"apiUrl": "https://ubi-api-smarthub-master-pro-homebase-gold.np.glb.pgrcloud.app/api"
+	}
+}

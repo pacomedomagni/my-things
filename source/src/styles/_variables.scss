@@ -1,0 +1,12 @@
+@import 'base/variables';
+
+$navbar-width: 7.2rem;
+$sidenav-width: calc(#{$side-sheet-width} - #{$navbar-width});
+
+$light-gray: rgba(244,245,247, .87);
+$white: #FFFFFF;
+$gray-25: #F5F5F5;
+$gray-50: #E8E8E8;
+$gray-75: #DBDBDB;
+$gray-100: #CECECE;
+$black: #000000;

@@ -1,0 +1,57 @@
+<div *ngIf="trialType">
+	<ubi-data-list *ngIf="trialData.vendorCode === vendorCode.Toyota">
+		<ubi-data-list-row labelSpan="40" label="Trial Customer Id">
+			{{ trialData.customerId }}
+		</ubi-data-list-row>
+		<ubi-data-list-row labelSpan="40" label="UBI Vendor Customer Id">
+			{{ trialData.vendorCustomerId }}
+		</ubi-data-list-row>
+		<ubi-data-list-row labelSpan="40" label="UBI Vendor Code">
+			{{ trialData.vendorCode }} ({{vendorCodeValue}})
+		</ubi-data-list-row>
+		<ubi-data-list-row labelSpan="40" label="State">
+			{{ trialData.state }}
+		</ubi-data-list-row>
+	</ubi-data-list>
+
+	<ubi-data-list *ngIf="trialData.vendorCode !== vendorCode.Toyota">
+		<ubi-data-list-row labelSpan="40" label="UBI Vendor Customer Id">
+			{{ trialData.customerId }}
+		</ubi-data-list-row>
+		<ubi-data-list-row labelSpan="40" label="UBI Vendor Code">
+			{{ trialData.vendorCode }} ({{vendorCodeValue}})
+		</ubi-data-list-row>
+		<ubi-data-list-row labelSpan="40" label="State">
+			{{ trialData.state }}
+		</ubi-data-list-row>
+	</ubi-data-list>
+</div>
+<div *ngIf="!trialType">
+	<ubi-data-list>
+		<ubi-data-list-row labelSpan="40" label="Trial Customer Id">
+			{{ edaqTrialData.customerId }}
+		</ubi-data-list-row>
+		<ubi-data-list-row labelSpan="40" label="State">
+			{{ edaqTrialData.state }}
+		</ubi-data-list-row>
+		<ubi-data-list-row labelSpan="40" label="VIN">
+			{{ edaqTrialData.vin }}
+		</ubi-data-list-row>
+		<ubi-data-list-row labelSpan="40" label="Year">
+			{{ edaqTrialData.year }}
+		</ubi-data-list-row>
+		<ubi-data-list-row labelSpan="40" label="Make">
+			{{ edaqTrialData.make }}
+		</ubi-data-list-row>
+		<ubi-data-list-row labelSpan="40" label="Model">
+			{{ edaqTrialData.model }}
+		</ubi-data-list-row>
+		<ubi-data-list-row labelSpan="40" label="UBI Vendor Code">
+			{{ edaqTrialData.vendorCode }} ({{vendorCodeValue}})
+		</ubi-data-list-row>
+		<ubi-data-list-row labelSpan="40" label="participantExternalKey">
+			{{ edaqTrialData.participantExternalKey }}
+		</ubi-data-list-row>
+	</ubi-data-list>
+
+</div>

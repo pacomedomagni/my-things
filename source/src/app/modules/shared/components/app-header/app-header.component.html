@@ -1,0 +1,20 @@
+<div class="flex justify-center p-xxs header-container">
+	<img class="app-logo" alt="TMX SmartHub" />
+	<div class="info-container">
+		<a class="text-base underline cui-link" target="_blank"
+			href="https://progressiveinsurance.sharepoint.com/sites/Grp_TMXSmartHub/TMX%20SmartHub%20Users%20Wiki/TMXSmartHub%20Instructions.aspx">Help Documentation</a>
+		<a class="text-base underline cui-link" target="_blank"
+			href="https://progressiveinsurance.sharepoint.com/sites/Grp_TMXSmartHub/TMX%20SmartHub%20Users%20Wiki/SRM%20Request.aspx">SmartHub SRM Request</a>
+		<ubi-policy-header *ngIf="policyQuery.workingPolicy$ | async">
+		</ubi-policy-header>
+	</div>
+</div>
+<div *ngIf="ongoingOutage" class="flex justify-center pb-xs">
+	<div class="flex">
+		<mat-icon class="decorator-icon mat-warn m-auto">error</mat-icon>
+	</div>
+	<div class="mat-error pl-xxs">
+		<div>{{ outageInfo }}</div>
+		<div>SM is investigating. Please click <a class="underline" href="https://progressiveinsurance.sharepoint.com/sites/Grp_TMXSmartHub/TMX%20SmartHub%20Users%20Wiki/SMARTHUB%20OUTAGES%20or%20Issues.aspx" target="_blank">here</a> for more information.</div>
+	</div>
+</div>

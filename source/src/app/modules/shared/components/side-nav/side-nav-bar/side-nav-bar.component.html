@@ -1,0 +1,15 @@
+<mat-toolbar>
+	<mat-icon fontSet="material-icons-outlined" class="text-accent">
+		{{appGroup?.icon}}
+	</mat-icon>
+	<h2 class="cui-h2">{{appGroup?.name}}</h2>
+</mat-toolbar>
+<mat-nav-list dense *ngFor="let appGroup of groupedApps; let last = last;" [disableRipple]="true">
+	<h3 mat-subheader>{{ appGroup.appType }}s</h3>
+	<mat-list-item class="ubi-sidenav-item" *ngFor="let item of appGroup.apps">
+		<a matRipple mat-list-item [routerLink]="item.id" routerLinkActive="active" class="ubi-sidenav-link">
+			{{ item.name }}
+		</a>
+	</mat-list-item>
+	<mat-divider *ngIf="!last"></mat-divider>
+</mat-nav-list>

@@ -1,0 +1,31 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@mixin page-header-theme($theme) {
+	$color-config: mat.get-color-config($theme);
+	$foreground: map.get($color-config, 'foreground');
+	$is-dark: map.get($color-config, 'is-dark');
+	$is-high-contrast: map.get($color-config, 'is-high-contrast');
+	$blue: mat.define-palette($cui-blue);
+
+	.page-header {
+		border-bottom-color: mat.get-color-from-palette($foreground, divider);
+		box-shadow: 0 20px 0px 0px $white, 0 -20px 0px 0px $white, 5px 0 10px -5px transparentize($black, .8), -5px 0 10px -5px transparentize($black, .8) !important;
+	}
+
+	.page-header-description {
+		color: mat.get-color-from-palette($foreground, secondary-text);
+	}
+
+	@if $is-dark {
+		.page-header {
+			box-shadow: 0 10px 0px 0px #424242, 0 -10px 0px 0px #424242, 5px 0 20px -5px mat.get-color-from-palette($blue, 500), -5px 0 20px -5px mat.get-color-from-palette($blue, 500) !important;
+		}
+	}
+
+	@if $is-high-contrast {
+		.page-header {
+			box-shadow: 0 10px 0px 0px $black, 0 -10px 0px 0px $black, 5px 0 20px -5px mat.get-color-from-palette($cui-hc-yellow, 500), -5px 0 20px -5px mat.get-color-from-palette($cui-hc-yellow, 500) !important;
+		}
+	}
+}

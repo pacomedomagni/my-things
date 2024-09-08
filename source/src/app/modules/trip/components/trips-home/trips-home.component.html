@@ -1,0 +1,115 @@
+<div class="flex flex-wrap justify-center"
+	 *ngIf="selectedParticipant"
+	 [@fadeAnim]>
+	<mat-card appearance="outlined" class="participant-card">
+		<mat-form-field appearance="outline">
+			<mat-label>Participant</mat-label>
+			<mat-select cuiMatSelectAccessibility
+						[(ngModel)]="selectedParticipant">
+				<mat-option *ngFor="let participant of participants"
+							[value]="participant">
+					{{ this.policyQuery.getParticipantName(participant) }}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+
+		<ubi-data-list>
+			<ubi-data-list-row labelSpan="40"
+							   label="Program Type">
+				{{programTypeLabel.get(selectedParticipant.programType)}}
+			</ubi-data-list-row>
+			<ubi-data-list-row labelSpan="40"
+							   label="Scoring Algorithm">
+				{{selectedParticipant.scoringAlgorithmData?.description}}
+			</ubi-data-list-row>
+			<ubi-data-list-row labelSpan="40"
+							   label="Status">
+				{{participantStatusLabel.get(selectedParticipant.status)}}
+			</ubi-data-list-row>
+			<ubi-data-list-row labelSpan="40"
+							   label="Reason Code">
+				{{participantReasonCodeLabel.get(selectedParticipant.reasonCode)}}
+			</ubi-data-list-row>
+			<ubi-data-list-row labelSpan="40"
+							   label="Serial Number"
+							   *ngIf="selectedParticipant.enrollmentExperience !== deviceExperience.Mobile">
+				{{selectedParticipant.deviceDetails?.serialNumber}}
+			</ubi-data-list-row>
+			<ubi-data-list-row labelSpan="40"
+							   label="Wireless Status"
+							   *ngIf="selectedParticipant.enrollmentExperience !== deviceExperience.Mobile">
+				{{selectedParticipant.deviceDetails?.wirelessStatus}}
+			</ubi-data-list-row>
+			<ubi-data-list-row labelSpan="40"
+							   label="Ship Date"
+							   *ngIf="selectedParticipant.enrollmentExperience !== deviceExperience.Mobile">
+				{{selectedParticipant.deviceDetails?.shipDate | date: 'short'}}
+			</ubi-data-list-row>
+			<ubi-data-list-row labelSpan="40"
+							   label="Change Date">
+				{{selectedParticipant.changeEffectiveDate | date: 'short'}}
+			</ubi-data-list-row>
+			<ubi-data-list-row labelSpan="40"
+							   label="Enrollment Date">
+				{{ selectedParticipant.enrollmentDate | date: 'short' }}
+			</ubi-data-list-row>
+		</ubi-data-list>
+	</mat-card>
+
+	<mat-card appearance="outlined">
+		<button class="mb-xs"
+				mat-flat-button
+				color="primary"
+				(click)="openStageGradesDialog()"
+				[disabled]="shouldDisableStageGrades(selectedParticipant)"
+				aria-label="Stage Grades">
+			Stage Grades
+		</button>
+		<button class="mb-xs"
+				mat-flat-button
+				color="primary"
+				(click)="updateStageGrades(120, 1.0);"
+				*ngIf="!is50(selectedParticipant)"
+				[disabled]="shouldDisableStageGrades(selectedParticipant)"
+				aria-label="Stage for monitoring complete with discount"> Stage
+			for Monitoring Complete <br /> w/ Discount</button>
+		<button class="mb-xs"
+				mat-flat-button
+				color="primary"
+				(click)="updateStageGrades(120, 7.0);"
+				*ngIf="!is50(selectedParticipant)"
+				[disabled]="shouldDisableStageGrades(selectedParticipant)"
+				aria-label="Stage for monitoring complete with surcharge">Stage
+			for Monitoring Complete <br /> w/ Surcharge</button>
+		<button class="mb-xs"
+				mat-flat-button
+				color="primary"
+				(click)="updateStageGrades(45, 1.0);"
+				*ngIf="!is50(selectedParticipant)"
+				[disabled]="shouldDisableStageGrades(selectedParticipant)"
+				aria-label="Stage For Continue to Monitor at Renewal">
+			Stage for
+			Continue to Monitor <br /> at Renewal</button>
+		<button class="mb-xs"
+				mat-flat-button
+				color="primary"
+				(click)="openASingleTripDialog()"
+				[disabled]="shouldDisableStageGrades(selectedParticipant)"
+				aria-label="Process a Single Trip">
+			Process a Single Trip</button>
+		<button class="mb-xs"
+				mat-flat-button
+				color="primary"
+				(click)="openMultipleTripsDialog()"
+				[disabled]="shouldDisableStageGrades(selectedParticipant)"
+				aria-label="Process Trips Over Seven Days">
+			Process Trips Over Seven Days</button>
+		<button class="mb-xs"
+				mat-flat-button
+				color="primary"
+				(click)="openInitialDiscountDialog()"
+				[disabled]="shouldDisableInitialDiscount(selectedParticipant)"
+				[hidden]="selectedParticipant.programType !== programType.PriceModel2"
+				aria-label="Stage 2.0 Initial Discount">Stage 2.0 Initial Discount</button>
+	</mat-card>
+</div>

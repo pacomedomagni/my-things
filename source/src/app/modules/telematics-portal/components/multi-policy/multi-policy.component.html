@@ -1,0 +1,34 @@
+<div id="table-interaction-description" aria-hidden="true" class="screen-reader-only">
+	Press enter to select policy
+</div>
+
+<table mat-table [dataSource]="dataSource" class="cui-table">
+
+	<ng-container matColumnDef="policyNumber">
+		<th mat-header-cell colspan="2" *matHeaderCellDef>
+			Policy Number
+		</th>
+		<td mat-cell colspan="2" *matCellDef="let policy">
+			<button class="cui-link" (click)="selectPolicy(policy.policyNumber)" role="link">
+				{{policy.policyNumber}}
+			</button>
+		</td>
+	</ng-container>
+
+	<ng-container matColumnDef="mobileStatus">
+		<th mat-header-cell colspan="2" *matHeaderCellDef>
+			Mobile Registration Status
+		</th>
+		<td mat-cell colspan="2" *matCellDef="let policy">
+			{{policy.extenders?.MobileRegistrationStatus}}
+		</td>
+	</ng-container>
+
+	<tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+	<tr mat-row tabindex="0" [ngClass]="'cui-row-selectable' + (selectedIndex === i ? ' cui-row-active' : '')"
+		aria-describedby="table-interaction-description" (click)="selectRow(i)" (keydown.enter)="selectRow(i)"
+		(keydown.space)="selectRow(i)" *matRowDef="let i = index; let element; let row; columns: displayedColumns;">
+	</tr>
+</table>
+
+<mat-paginator #paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons></mat-paginator>

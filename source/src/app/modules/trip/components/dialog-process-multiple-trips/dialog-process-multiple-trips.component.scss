@@ -1,0 +1,8 @@
+:host {
+    .mat-mdc-dialog-content{
+        margin-top: 5px;
+        padding-top: 5px;
+		display: flex;
+		flex-direction: column;
+    }
+}

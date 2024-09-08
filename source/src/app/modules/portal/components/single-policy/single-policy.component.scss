@@ -1,0 +1,25 @@
+:host {
+	.mat-expansion-panel-header-title {
+		margin: auto 0;
+		max-width: 125px;
+	}
+
+	.mat-accordion {
+		padding: 25px;
+    min-width: 450px;
+	}
+
+	ubi-participants {
+		padding: 25px;
+	}
+
+	.policy-description {
+		flex: auto;
+		margin: auto;
+	}
+
+	.policy-select {
+		margin: auto;
+	}
+
+}

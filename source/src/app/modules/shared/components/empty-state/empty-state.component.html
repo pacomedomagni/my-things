@@ -1,0 +1,30 @@
+<!-- Button contents -->
+<ng-template #buttonContent>
+	<mat-icon *ngIf="actionIcon && actionIconAlign === 'left'" matPrefix>
+		{{actionIcon}}
+	</mat-icon>
+	{{actionText}}
+	<mat-icon *ngIf="actionIcon && actionIconAlign === 'right'" matSuffix>
+		{{actionIcon}}
+	</mat-icon>
+</ng-template>
+
+<mat-icon *ngIf="icon && icon !== 'spacer'" class="empty-state-icon">{{icon}}</mat-icon>
+<mat-icon *ngIf="svgIcon && svgIcon !== 'spacer'" svgIcon="{{svgIcon}}" class="empty-state-icon"></mat-icon>
+<div *ngIf="icon === 'spacer' || svgIcon === 'spacer'" aria-hidden="true" class="empty-state-icon-spacer"></div>
+<div *ngIf="primaryText" class="empty-state-primary-text">
+	{{primaryText}}
+</div>
+<div *ngIf="secondaryText" class="empty-state-secondary-text">
+	{{secondaryText}}
+</div>
+<ng-container *ngIf="actionText">
+	<button *ngIf="actionButtonType === 'primary'" mat-flat-button color="primary" class="empty-state-action"
+		(click)="onAction()">
+		<ng-container *ngTemplateOutlet="buttonContent"></ng-container>
+	</button>
+	<button *ngIf="actionButtonType === 'secondary'" mat-stroked-button color="primary" class="empty-state-action"
+		(click)="onAction()">
+		<ng-container *ngTemplateOutlet="buttonContent"></ng-container>
+	</button>
+</ng-container>

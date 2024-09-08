@@ -1,0 +1,18 @@
+<div class="flex flex-col justify-center p-xs pb-0">
+			<mat-form-field *ngIf="model.isNonInstaller" appearance="outline" [hideRequiredMarker]="true">
+				<mat-label>Non-Installer Days (1-44)</mat-label>
+                <input [(ngModel)]="model.nonInstallerDays" name="nonInstallerDays" type="number" matInput
+                    required min="1" [min]="1" max="44" [max]="44">
+				<mat-error>
+					Please enter a valid number between 1 and 44.
+				</mat-error>
+            </mat-form-field>
+            <mat-form-field *ngIf="model.isNonCommunicator" appearance="outline" [hideRequiredMarker]="true" [style.width.px]=225>
+				<mat-label>Non-Communicator Days (1-44)</mat-label>
+                <input [(ngModel)]="model.nonCommunicatorDays" name="nonCommunicatorDays" type="number" matInput
+                    required min="1" [min]="1" max="44" [max]="44">
+				<mat-error>
+					Please enter a valid number between 1 and 44.
+				</mat-error>
+            </mat-form-field>
+</div>

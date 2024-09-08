@@ -1,0 +1,66 @@
+<div class="flex flex-wrap justify-center"
+     *ngIf="selectedParticipant"
+     [@fadeAnim]>
+		<mat-card appearance="outlined" class="participant-card">
+				<mat-form-field appearance="outline">
+						<mat-label>Participant</mat-label>
+						<mat-select cuiMatSelectAccessibility
+												[(ngModel)]="selectedParticipant">
+								<mat-option *ngFor="let participant of participants"
+														[value]="participant">
+										{{ this.policyQuery.getParticipantName(participant) }}
+								</mat-option>
+						</mat-select>
+				</mat-form-field>
+
+				<ubi-data-list>
+						<ubi-data-list-row labelSpan="40"
+																label="Wireless Status">
+								{{selectedParticipant.deviceDetails?.wirelessStatus}}
+						</ubi-data-list-row>
+						<ubi-data-list-row labelSpan="40"
+																label="Serial Number">
+								{{selectedParticipant.deviceDetails?.serialNumber}}
+						</ubi-data-list-row>
+						<ubi-data-list-row labelSpan="40"
+																label="Reason Code">
+								{{participantReasonCodeLabel.get(selectedParticipant.reasonCode)}}
+						</ubi-data-list-row>
+				</ubi-data-list>
+		</mat-card>
+
+		<mat-card appearance="outlined">
+				<button class="mb-xs"
+								mat-flat-button
+								color="primary"
+								(click)="openAssignPlugInDialog();"
+								[disabled]="shouldDisableAssignPlugInDevice(selectedParticipant)"
+								aria-label="Assign Plug-in Device">
+						Assign Plug-in Device
+				</button>
+				<button class="mb-xs"
+                mat-flat-button
+                color="primary"
+                (click)="openReturnPlugInDialog();"
+                [disabled]="(enableReturnButton$ | async) === (false)"
+                aria-label="Return Plug-in Device">
+				Return Plug-in Device
+				</button>
+				<button class="mb-xs"
+								mat-flat-button
+								color="primary"
+								(click)="openUnsolicitedReturnDialog();"
+								[disabled]="shouldDisableUnsolicitedReturn(selectedParticipant)"
+								aria-label="Unsolicited Device Return">
+						Unsolicited Device Return
+				</button>
+				<button class="mb-xs"
+							mat-flat-button
+							color="primary"
+							(click)="openDeviceFeeDialog();"
+							*ngIf="enableDeviceFeeButton"
+							aria-label="Device Fee Change">
+					{{ currentBillingTransaction?.transactionType === billingType.Fee ? 'Reverse Charge' : 'Add Charge'  }}
+			</button>
+		</mat-card>
+</div>

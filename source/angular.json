@@ -1,0 +1,153 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "smarthub": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "ubi",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "allowedCommonJsDependencies": [
+							"angular2-text-mask",
+							"clone",
+							"fast-sha256",
+							"file-saver",
+							"moment",
+							"moment-timezone",
+							"xlsx",
+							"zone.js/dist/zone-error"
+						],
+            "outputPath": "dist/smarthub",
+						"sourceMap": true,
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "./node_modules/@pgr-cla/core-ui-components/styles/new-main-for-theming.scss",
+              "./src/styles.scss",
+              {
+                "inject": false,
+                "input": "./src/styles/theming/themes/light-blue.scss",
+                "bundleName": "light-blue"
+              },
+              {
+                "inject": false,
+                "input": "./src/styles/theming/themes/light-green.scss",
+                "bundleName": "light-green"
+              },
+              {
+                "inject": false,
+                "input": "./src/styles/theming/themes/dark-blue.scss",
+                "bundleName": "dark-blue"
+              },
+              {
+                "inject": false,
+                "input": "./src/styles/theming/themes/high-contrast.scss",
+                "bundleName": "high-contrast"
+              }
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "./node_modules/@pgr-cla/core-ui-components/styles"
+              ]
+            },
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+							"optimization": {
+								"scripts": true,
+								"styles": {
+									"minify": true,
+									"inlineCritical": false
+								},
+								"fonts": true
+							},
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "smarthub:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "smarthub:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "smarthub:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "e2e/protractor.conf.js",
+            "devServerTarget": "smarthub:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "smarthub:serve:production"
+            }
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "analytics": false
+  }
+}

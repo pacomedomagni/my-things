@@ -1,0 +1,31 @@
+<cui-dialog closeButtonLabel="Close Dialog"
+            [showClose]="true"
+            [showFooter]="true"
+            (close)="onClose()">
+    <span mat-dialog-title
+          dialog-header>
+        Assign Plug-in Device
+    </span>
+    <span mat-dialog-content
+          class="mt-xxs"
+          dialog-content>
+        Are you sure you want to assign a device to
+        {{data.name}}?
+        Click OK to continue.
+    </span>
+    <ng-container dialog-footer>
+        <button mat-flat-button
+                color="primary"
+                class="mr-xxs"
+                data-pgr-id="btnDialogConfirm"
+                (click)="onConfirm()">
+            Ok
+        </button>
+        <button mat-stroked-button
+                color="primary"
+                data-pgr-id="btnDialogCancel"
+                (click)="onCancel()">
+            Cancel
+        </button>
+    </ng-container>
+</cui-dialog>

@@ -1,0 +1,24 @@
+@use "sass:map";
+@use '@angular/material' as mat;
+@import '@angular/material/theming';
+@import 'base/variables';
+//@import '/source/src/app/modules/shared/components/nav-rail/nav-rail.component.scss';
+@import '../../../../../../styles/variables';
+
+$content-container-padding-xs: 1.6rem;
+
+.tmx-sidenav-container {
+  box-sizing: border-box;
+  flex: 1;
+  height: 100vh;
+  overflow: auto;
+}
+
+.tmx-sidenav-content {
+  font-weight: 400;
+  padding: 0 4rem 4rem;
+  @media ($mat-xsmall) {
+    padding-left: $content-container-padding-xs;
+    padding-right: $content-container-padding-xs;
+	}
+}

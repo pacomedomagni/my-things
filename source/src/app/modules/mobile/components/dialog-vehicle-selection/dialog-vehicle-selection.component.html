@@ -1,0 +1,11 @@
+<div class="flex justify-center pb-xxs">
+	<div mat-dialog-content dialog-content class="mt-xxs">
+		<mat-radio-group aria-labelledby="example-radio-group-label" [(ngModel)]="model.selection"
+			[ngModelOptions]="{standalone: true}">
+			<mat-radio-button class="d-block my-bl-2" *ngFor="let vehicle of vehicles" [value]="vehicle">
+				{{ vehicle.year }} {{ vehicle.make }} {{ vehicle.model }}
+			</mat-radio-button>
+		</mat-radio-group>
+	</div>
+</div>
+

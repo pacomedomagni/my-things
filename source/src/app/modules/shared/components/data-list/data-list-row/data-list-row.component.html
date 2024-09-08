@@ -1,0 +1,17 @@
+<ng-template>
+	<tr class="{{rowClass}}">
+		<td [style.width.%]="labelSpan" class="font-bold pr-bl-2 relative {{colClass}}">
+			<div *ngIf="decoratorIcon">
+				<span class="screen-reader-only">{{screenReaderLabel}}</span>
+				<mat-icon [class]="'decorator-icon ' + decoratorIconClass">{{decoratorIcon}}</mat-icon>
+			</div>
+
+
+			<span *ngIf="label">{{label}}</span>
+			<ng-content select="[list-item-label]"></ng-content>
+		</td>
+		<td>
+			<ng-content></ng-content>
+		</td>
+	</tr>
+</ng-template>

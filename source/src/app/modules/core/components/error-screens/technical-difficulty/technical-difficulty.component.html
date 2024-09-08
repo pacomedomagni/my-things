@@ -1,0 +1,7 @@
+<div class="error-screen-container">
+	<mat-icon class="error-icon" svgIcon="ubi_sadcone"></mat-icon>
+	<h1 class="mb-s error-screen-title">{{title}}</h1>
+	<div class="mb-m">{{message}}</div>
+	<strong class="error-screen-help" *ngIf="helpDeskNumber">If the problem persists, call the help desk at <span
+			class="underline">{{helpDeskNumber}}</span></strong>
+</div>

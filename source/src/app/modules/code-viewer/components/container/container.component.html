@@ -1,0 +1,10 @@
+<div class="flex justify-center">
+	<mat-card appearance="outlined" class="flex flex-col">
+		<mat-checkbox [(ngModel)]="checked"
+			(change)="onCheckedChanged()">Pretty</mat-checkbox>
+		<textarea preclass="formatted" [(ngModel)]="content"
+			(keyup)="textChanged($event.target.value)"> </textarea>
+		<div class="flex flex-col justify-center p-xs pb-0">
+		</div>
+	</mat-card>
+</div>

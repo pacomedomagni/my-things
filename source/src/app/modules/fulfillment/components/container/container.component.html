@@ -1,0 +1,26 @@
+<div class="flex justify-center">
+	<mat-card appearance="outlined" class="flex flex-col">
+		<div *ngIf="(total$ | async) > 0">
+			<div style="margin-bottom: 10px">
+				<mat-progress-bar mode="determinate"
+					[value]="progressBar.progress"></mat-progress-bar>
+				<div>Progress {{(done$ | async) }} / {{total$ | async}}</div>
+			</div>
+		</div>
+
+		<div class="flex flex-col justify-center p-xs pb-0">
+			<mat-form-field appearance="outline" [hideRequiredMarker]="true">
+				<mat-label>Policy Create Date Time</mat-label>
+				<input [(ngModel)]="lastChangeDateTime" name="lastChangeDateTime"
+					matInput required [max]="today" [matDatepicker]="picker">
+				<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+				<mat-datepicker #picker></mat-datepicker>
+			</mat-form-field>
+			<button class="mb-xs full-width" mat-flat-button color="primary"
+				[disabled]="isWorking" (click)="fulfillDevices()">
+				Device Fulfillment for Participants
+			</button>
+		</div>
+
+	</mat-card>
+</div>

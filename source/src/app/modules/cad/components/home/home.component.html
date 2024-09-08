@@ -1,0 +1,46 @@
+<div class="flex flex-wrap justify-center"
+	 *ngIf="selectedParticipant"
+	 [@fadeAnim]>
+	<mat-card appearance="outlined" class="participant-card">
+		<mat-form-field appearance="outline">
+			<mat-label>Participant</mat-label>
+			<mat-select cuiMatSelectAccessibility
+						[(ngModel)]="selectedParticipant">
+				<mat-option *ngFor="let participant of participants"
+							[value]="participant">
+					{{ this.policyQuery.getParticipantName(participant) }}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+
+		<ubi-data-list>
+			<ubi-data-list-row labelSpan="40" label="Status">
+				{{participantStatusLabel.get(selectedParticipant.status)}}
+			</ubi-data-list-row>
+			<ubi-data-list-row labelSpan="40" label="Eligible Date">
+				{{selectedParticipant.crashAccidentDetectionInfo.eligibleDateTime | date: 'short'}}
+			</ubi-data-list-row>
+			<ubi-data-list-row labelSpan="40" label="Ineligible Date">
+				{{ selectedParticipant.crashAccidentDetectionInfo.ineligibleDateTime | date: 'short' }}
+			</ubi-data-list-row>
+			<ubi-data-list-row labelSpan="40" label="Is Program Eligible?">
+				{{ selectedParticipant.crashAccidentDetectionInfo.isProgramEligible }}
+			</ubi-data-list-row>
+			<ubi-data-list-row labelSpan="40" label="Is Device Eligible?">
+				{{ selectedParticipant.crashAccidentDetectionInfo.isDeviceEligible }}
+			</ubi-data-list-row>
+		</ubi-data-list>
+	</mat-card>
+
+	<mat-card appearance="outlined">
+		<button class="mb-xs"
+				mat-flat-button
+				color="primary"
+				(click)="resetEligibility(selectedParticipant)"
+				[disabled]="shouldDisableResetEligbility(selectedParticipant)"
+				aria-label="Reset Eligibility">
+			Reset Eligibility
+		</button>
+
+	</mat-card>
+</div>

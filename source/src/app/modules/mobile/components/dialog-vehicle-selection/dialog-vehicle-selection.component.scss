@@ -1,0 +1,13 @@
+.mat-mdc-dialog-content {
+	overflow: hidden;
+}
+
+.mat-mdc-radio-button {
+	padding: 5px;
+}
+
+::ng-deep {
+	.dialog-footer {
+		justify-content: flex-end !important;
+	}
+}

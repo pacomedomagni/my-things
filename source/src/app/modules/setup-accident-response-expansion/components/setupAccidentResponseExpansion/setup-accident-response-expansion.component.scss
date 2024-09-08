@@ -1,0 +1,32 @@
+:host {
+	.participant-header {
+		flex: auto;
+		margin: auto;
+	}
+	
+	.participant-card {
+		padding: 10px 25px;
+		width: 70%;
+		min-width: 420px;
+	}
+
+	.mat-mdc-card {
+		margin: 10px 25px;
+		display: flex;
+		flex-direction: column;
+	}
+
+	::ng-deep{
+		td {
+			vertical-align: middle !important;
+		}
+		mat-form-field {
+			width: 150px;
+		}
+		.search-button {
+			padding: 4px 20px;
+			margin-top: 4px;
+		}
+
+	}
+}

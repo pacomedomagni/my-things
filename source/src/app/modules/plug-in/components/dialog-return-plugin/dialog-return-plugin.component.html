@@ -1,0 +1,8 @@
+<div class="flex flex-col justify-center p-xs pb-0">
+    Select the Device you wish to return
+    <mat-radio-group class="mat-radio-group" [(ngModel)]="model.selection" layout="row" required>
+        <mat-radio-button class="mat-radio-button" *ngFor="let deviceSerialNumber of deviceSerialNumbers" [value]="deviceSerialNumber">
+            {{deviceSerialNumber}}
+        </mat-radio-button>
+    </mat-radio-group>
+</div>

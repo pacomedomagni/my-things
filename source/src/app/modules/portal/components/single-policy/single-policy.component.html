@@ -1,0 +1,45 @@
+<div class="flex flex-wrap justify-center">
+	<mat-accordion #policyDetailsAccordion="matAccordion">
+		<mat-expansion-panel [expanded]="true">
+			<mat-expansion-panel-header>
+				<mat-panel-title>Policy Details</mat-panel-title>
+				<mat-panel-description>
+					<span class="policy-description">{{policy.policyNumber}}</span>
+					<button mat-flat-button color="primary" class="policy-select" role="link"
+						(click)="$event.stopPropagation(); selectPolicy(policy.policyNumber);" aria-label="Select policy">
+						Modify Data
+					</button>
+				</mat-panel-description>
+			</mat-expansion-panel-header>
+			<ubi-data-list>
+				<ubi-data-list-row labelSpan="40" label="Policy Number">
+					<span>{{policy.policyNumber}}</span>
+				</ubi-data-list-row>
+				<ubi-data-list-row labelSpan="40" label="Name">
+					<span class="flex flex-col">
+						<span>{{policy.primaryContact.firstName}}</span>
+						<span>{{policy.primaryContact.lastName}}</span>
+					</span>
+				</ubi-data-list-row>
+				<ubi-data-list-row labelSpan="40" label="Address">
+					<span class="flex flex-col">
+						<span>{{policy.mailingAddress.address1}}</span>
+						<span *ngIf="policy.mailingAddress.address2 !== ''">{{policy.mailingAddress.address2}}</span>
+						<span>{{policy.mailingAddress.city}}, {{policy.mailingAddress.state}}</span>
+						<span>{{policy.mailingAddress.zipCode}}</span>
+					</span>
+				</ubi-data-list-row>
+				<ubi-data-list-row labelSpan="40" label="Create Date">
+					<span>{{policy.createDate | date: 'M/d/yyyy h:mm a'}}</span>
+				</ubi-data-list-row>
+				<ubi-data-list-row labelSpan="40" label="Inception Date">
+					<span>{{policy.inceptionDate | date: 'M/d/yyyy'}}</span>
+				</ubi-data-list-row>
+				<ubi-data-list-row labelSpan="40" label="Expiration Date">
+					<span>{{policy.expirationDate | date: 'M/d/yyyy'}}</span>
+				</ubi-data-list-row>
+			</ubi-data-list>
+		</mat-expansion-panel>
+	</mat-accordion>
+	<ubi-participants></ubi-participants>
+</div>

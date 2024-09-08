@@ -1,0 +1,34 @@
+
+    <div class="flex justify-center pb-xxs">
+      <mat-form-field appearance="outline">
+        <mat-label>New Phone Number</mat-label>
+        <input required
+               [(ngModel)]="model.phoneNumber"
+               (keyup)="clearAutoGenerateMobileNumber()"
+               id="ubi-ps-phn-nbr"
+               type="text"
+               matInput
+               mask="(000) 000-0000"
+               minlength="10"
+               >
+        <mat-error *ngIf="phoneNumberFormControl.hasError('required')">
+          Please enter a phone number.
+        </mat-error>
+        <mat-error *ngIf="phoneNumberFormControl.hasError('minlength') || phoneNumberFormControl.hasError('maxlength')">
+          Please enter a valid phone number.
+        </mat-error>
+        <mat-hint *ngIf="generateSuccessful===true">
+          Auto-generate successful. Click OK to continue
+        </mat-hint>
+      </mat-form-field>
+      <span>
+        <button mat-flat-button
+                color="primary"
+                class="ml-xxs mr-l autogeneratenumber-button"
+                aria-label="Auto-Generate Number"
+                (click)="generateMobileNumber()">
+          Auto-Generate Number
+          <ng-content select="mat-icon"></ng-content>
+        </button>
+      </span>
+    </div>

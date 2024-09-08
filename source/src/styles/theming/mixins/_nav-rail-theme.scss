@@ -1,0 +1,57 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@mixin nav-rail-theme($theme) {
+
+	$color-config: mat.get-color-config($theme);
+	$accent: map.get($color-config, 'accent');
+	$primary: map.get($color-config, 'primary');
+	$foreground: map.get($color-config, 'foreground');
+	$is-dark: map.get($color-config, 'is-dark');
+	$is-high-contrast: map.get($color-config, 'is-high-contrast');
+	$gray: mat.define-palette($cui-gray);
+
+	ubi-nav-rail {
+		background-color: mat.get-color-from-palette($primary, darker);
+		color: mat.get-color-from-palette($primary, darker-contrast);
+
+		.mat-mdc-icon-button {
+			color: mat.get-color-from-palette($primary, darker-contrast);
+
+			&.active {
+				box-shadow: inset -1px 0px 5px 0px rgb(0 0 0 / 20%);
+				color: $black;
+				background-color: mat.get-color-from-palette($gray, 100);
+			}
+		}
+	}
+
+	@if $is-high-contrast {
+		ubi-nav-rail {
+			background-color: $black;
+			border: 1px solid $white;
+			color: $white;
+
+			.mat-mdc-icon-button {
+				color: mat.get-color-from-palette($primary);
+
+				&.active {
+					background-color: mat.get-color-from-palette($accent);
+					color: $black;
+				}
+			}
+		}
+	}
+
+	@else if $is-dark {
+		ubi-nav-rail {
+			.mat-mdc-icon-button {
+				&.active {
+					box-shadow: none;
+					color: $white;
+					background-color: $black;
+				}
+			}
+		}
+	}
+}

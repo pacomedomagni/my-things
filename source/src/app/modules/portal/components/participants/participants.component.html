@@ -1,0 +1,72 @@
+<div [@.disabled]="disableAnimation">
+	<mat-accordion #participantDetailsAccordion="matAccordion" multi class="participant-accordion">
+		<mat-expansion-panel *ngFor="let participant of (policyQuery.policies$ | async)[0]?.participants"
+			[matTooltip]="participant.enrollmentExperience === deviceExperience.Mobile ? 'Mobile Participant' : 'Plug-in Participant'" matTooltipPosition="left">
+			<mat-expansion-panel-header>
+				<mat-panel-title>
+					<mat-icon color="primary"
+						[svgIcon]="participant.enrollmentExperience === deviceExperience.Mobile ? 'ubi_snapshot_mobile' : 'ubi_snapshot_device'" class="pr-xxs">
+					</mat-icon>Participant
+				</mat-panel-title>
+				<mat-panel-description>
+					<span class="participant-description">{{policyQuery.getParticipantName(participant)}}</span>
+				</mat-panel-description>
+			</mat-expansion-panel-header>
+			<mat-tab-group>
+				<mat-tab label="Info">
+					<ubi-data-list>
+						<ubi-data-list-row labelSpan="40" label="Program Type">{{programTypeLabel.get(participant.programType)}}
+						</ubi-data-list-row>
+						<ubi-data-list-row labelSpan="40" label="Scoring Algorithm">
+							{{participant.scoringAlgorithmData?.description}}
+						</ubi-data-list-row>
+						<ubi-data-list-row labelSpan="40" label="Status">{{participantStatusLabel.get(participant.status)}}
+						</ubi-data-list-row>
+						<ubi-data-list-row labelSpan="40" label="Reason Code">
+							{{participantReasonCodeLabel.get(participant.reasonCode)}}</ubi-data-list-row>
+						<ubi-data-list-row labelSpan="40" label="Change Date">{{participant.changeEffectiveDate | date: 'M/d/yyyy h:mm a'}}
+						</ubi-data-list-row>
+						<ubi-data-list-row labelSpan="40" label="Enrollment Date">{{participant.enrollmentDate | date: 'M/d/yyyy'}}
+						</ubi-data-list-row>
+					</ubi-data-list>
+				</mat-tab>
+				<mat-tab label="Vehicle Details" *ngIf="participant.vehicleDetails">
+					<ubi-data-list>
+						<ubi-data-list-row labelSpan="40" label="Year">{{participant.vehicleDetails.year}}</ubi-data-list-row>
+						<ubi-data-list-row labelSpan="40" label="Make">{{participant.vehicleDetails.make}}</ubi-data-list-row>
+						<ubi-data-list-row labelSpan="40" label="Model">{{participant.vehicleDetails.model}}</ubi-data-list-row>
+						<ubi-data-list-row labelSpan="40" label="VIN">{{participant.vehicleDetails.vin}}</ubi-data-list-row>
+					</ubi-data-list>
+				</mat-tab>
+				<mat-tab label="Device Details" *ngIf="participant.deviceDetails">
+					<ubi-data-list>
+						<ubi-data-list-row labelSpan="40" label="Wireless Status">{{participant.deviceDetails.wirelessStatus}}
+						</ubi-data-list-row>
+						<ubi-data-list-row labelSpan="40" label="Serial Number">{{participant.deviceDetails.serialNumber}}
+						</ubi-data-list-row>
+						<ubi-data-list-row labelSpan="40" label="Ship Date">
+							{{participant.deviceDetails.shipDate | date: 'M/d/yyyy'}}
+						</ubi-data-list-row>
+						<ubi-data-list-row labelSpan="40" label="Return Date">
+							{{participant.deviceDetails.returnDate | date: 'M/d/yyyy h:mm a'}}
+						</ubi-data-list-row>
+					</ubi-data-list>
+				</mat-tab>
+				<mat-tab label="Mobile Details" *ngIf="participant.mobileDetails">
+					<ubi-data-list>
+						<ubi-data-list-row labelSpan="40" label="Phone #">{{participant.mobileDetails.phoneNumber}}
+						</ubi-data-list-row>
+						<ubi-data-list-row labelSpan="40" label="Registration Status">
+							{{participant.mobileRegistrationDetails ? mobileRegistrationStatusLabel.get(participant.mobileRegistrationDetails.status) : ''}}
+						</ubi-data-list-row>
+						<ubi-data-list-row labelSpan="40" label="Phone Type">{{participant.mobileDetails.os}}</ubi-data-list-row>
+						<ubi-data-list-row labelSpan="40" label="Phone Model">{{participant.mobileDetails.model}}
+						</ubi-data-list-row>
+						<ubi-data-list-row *ngIf="hideDummyAppVersion(participant.mobileDetails.appVersion)" labelSpan="40" label="App Version">{{participant.mobileDetails.appVersion}}
+						</ubi-data-list-row>
+					</ubi-data-list>
+				</mat-tab>
+			</mat-tab-group>
+		</mat-expansion-panel>
+	</mat-accordion>
+</div>

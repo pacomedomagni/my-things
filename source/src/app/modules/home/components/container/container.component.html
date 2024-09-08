@@ -1,0 +1,12 @@
+<div class="flex flex-wrap justify-center">
+	<ng-container *ngFor="let app of apps">
+		<a *ngIf="shouldDisplay(app)" [routerLink]="'/' + app.id" class="m-xs card-container" matRipple>
+			<mat-icon *ngIf="app.icon" class="material-icons-icon">{{app.icon}}</mat-icon>
+			<mat-icon *ngIf="app.svgIcon" class="material-icons-icon" svgIcon="{{app.svgIcon}}"></mat-icon>
+			<div class="ml-xxs">
+				<div class="cui-h3 mb-2">{{app.name}}</div>
+				<span class="cui-label">{{app.description}}</span>
+			</div>
+		</a>
+	</ng-container>
+</div>
